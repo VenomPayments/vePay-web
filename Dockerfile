@@ -12,6 +12,6 @@ FROM dev as build
 COPY ./ .
 RUN yarn build
 
-FROM nginx:latest
+FROM nginx:latest as prod
 COPY --from=build /app/dist /www/
 COPY ./etc/nginx.conf /etc/nginx/conf.d/default.conf
