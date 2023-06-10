@@ -180,7 +180,7 @@ export default function DashboardInner(): JSX.Element {
                                                         </thead>
                                                         {//@ts-ignore
                                                             vePay?.shops?.length && vePay.shops[modalShopID].transactions.length ?
-                                                                <tbody className="uk-height-small">
+                                                                <tbody>
                                                                     {//@ts-ignore
                                                                         vePay?.shops?.length && vePay.shops![modalShopID]?.transactions?.map((item: { orderId: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; amount: BigNumber.Value }) => (
                                                                             <tr>
@@ -244,7 +244,8 @@ export default function DashboardInner(): JSX.Element {
                                     <Tile type='primary' className='uk-padding-small'>
                                         <CopyBlock
                                             text={`const payService = new VePay({
-                                                    ${vePay?.shops?.length && vePay.shops[modalShopID]._root.toString()}
+                                                    ${  //@ts-ignore
+                                                        vePay?.shops?.length && vePay.shops![modalShopID].address.toString()}
                                                 })
                                                 const onPay = () => {
                                                     payService.pay(
@@ -261,7 +262,7 @@ export default function DashboardInner(): JSX.Element {
                                         />
 
                                         <br />
-                                        <a src={"https://www.npmjs.com/package/vepay"}>Our npm lib</a>
+                                        <a href="https://www.npmjs.com/package/vepay" target="_blank" >Our npm lib</a>
                                     </Tile>
                                 </div>
                             </div>
