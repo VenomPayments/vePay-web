@@ -11,8 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Building image
-      run: docker build . -t vePay-web:latest --target prod
+      run: docker build . -t vepay-web:latest --target prod
     - name: Stop container
-      run: docker stop vePay-web && docker rm vePay-web || true
+      run: docker stop vepay-web && docker rm vepay-web || true
     - name: Start container
-      run: docker run -p 127.0.0.1:30100:80 --name vePay-web -d vePay-web:latest
+      run: docker run -p 127.0.0.1:30100:80 --name vepay-web -d vepay-web:latest
