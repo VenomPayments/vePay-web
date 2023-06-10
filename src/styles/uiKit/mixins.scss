@@ -32,14 +32,60 @@
 
     border: 1px solid #D3D3D3;
     border-radius: 8px;
+    color: #000;
+
+    input {
+        &::placeholder {
+            color: #9c9c9c !important;
+        }
+    }
 }
+
+
+// @mixin hook-control() {
+//     background: #fff0 !important;
+//     display: flex;
+//     flex-direction: row-reverse;
+//     gap: 24px;
+//     border: none;
+//     padding: 0;
+
+//     .uk-control-suffix {
+//         margin-left: 0 !important;
+//     }
+
+//     .uk-control-prefix {
+//         display: none;
+//     }
+
+//     .uk-control-input {
+//         display: flex;
+//         justify-content: end;
+//     }
+
+//     input {
+//         color: #fff !important;
+//         background: #fff0 !important;
+//         text-align: end !important;
+
+//         text-align: end !important;
+//         font-size: 32px !important;
+//         position: absolute !important;
+//         width: 336px !important;
+//         height: 42px !important;
+//         top: 5px !important;
+//     }
+// }
+
 
 @mixin hook-control-hover() {
     background: #F0F9FC;
+    color: #000;
 }
 
 @mixin hook-control-focus() {
     background: #F0F9FC;
+    color: #000;
 }
 
 // @mixin hook-control-input() {

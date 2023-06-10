@@ -37,19 +37,7 @@ export function HeaderInner(): JSX.Element {
                                         <Navbar.Right className="header-switchers" component={Navbar.Item}>
                                             <TvmConnector
                                                 standalone
-                                                showDropMenu={false}
-
                                             />
-                                            {wallet.isConnected
-                                                && (
-                                                    <Button
-                                                        type="default"
-                                                        style={{ padding: '0px 5px' }}
-                                                        onClick={() => wallet.disconnect()}
-                                                    >
-                                                        <Icon className="iconLogout" icon="logout" />
-                                                    </Button>
-                                                )}
                                         </Navbar.Right>
                                     )}
                                 </Observer>
