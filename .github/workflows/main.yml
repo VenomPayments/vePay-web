@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: "prod"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Building image
+      run: docker build . -t vePay-web:latest --target prod
+    - name: Stop container
+      run: docker stop vePay-web && docker rm vePay-web || true
+    - name: Start container
+      run: docker run -p 127.0.0.1:30100:3000 --name vePay-web -d vePay-web:latest
