@@ -24,6 +24,11 @@
     line-height: 20px;
     color: #FFFFFF;
     padding: 12px 36px;
+
+    &:disabled {
+        color: #ffffff !important;
+        background-color: #8ecde2 !important;
+    }
 }
 
 @mixin hook-control() {

@@ -61,6 +61,8 @@ export class VePayStore extends AbstractStore<
 
         await VePayStore.Utils._deployShop(name, description, meta)
         await successStream()
+        await subscriber.unsubscribe()
+
     }
 
     public async getShops() {
@@ -75,6 +77,9 @@ export class VePayStore extends AbstractStore<
                 transaction,
             }))
             .filterMap(async result => {
+                if(result.event === 'ShopDeployed'){
+                    console.log(result)
+                }
                 if (
                     result.event === 'ShopDeployed'
                     && result.data.shop_owner.toString() === this.wallet.account?.address.toString()
@@ -93,7 +98,7 @@ export class VePayStore extends AbstractStore<
             .delayed(s => s.first())
 
         await successStream().then((e) => {
-            console.log(shops)
+            subscriber.unsubscribe()
             this.setData('shops', shops)
         })
     }
@@ -121,7 +126,8 @@ export class VePayStore extends AbstractStore<
             .delayed(s => s.first())
 
         await successStream()
-        console.log(transactions)
+        await subscriber.unsubscribe()
+
         return transactions
     }
 
@@ -156,6 +162,8 @@ export class VePayStore extends AbstractStore<
 
         await VePayStore.Utils._withdraw(new BigNumber(amount).shiftedBy(USDT_DECIMALS).toFixed(), meta, shopAddress)
         await successStream()
+        await subscriber.unsubscribe()
+
     }
 
     public get shops() {

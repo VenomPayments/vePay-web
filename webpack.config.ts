@@ -106,6 +106,7 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.plugins.push(
         new HtmlWebpackPlugin({
+            title: 'VePay',
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
@@ -117,6 +118,23 @@ export default (_: any, options: any): WebpackConfig => {
             new MiniCssExtractPlugin({
                 filename: 'css/[name]-[contenthash:6].css',
                 ignoreOrder: true,
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        context: 'public',
+                        from: 'favicon.ico',
+                    },
+                    {
+                        context: 'public',
+                        from: 'favicon.svg',
+                    },
+                    {
+                        context: 'public',
+                        from: 'meta-image.png',
+                        to: 'assets/meta-image.png'
+                    },
+                ],
             }),
         )
     }

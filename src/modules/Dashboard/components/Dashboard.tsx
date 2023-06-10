@@ -65,6 +65,8 @@ export default function DashboardInner(): JSX.Element {
             vePay.getShops()
     }, [wallet.account?.address])
 
+    console.log(modalShopID && vePay.shops[modalShopID]._usdtBalance)
+
     return (
         <Observer>
             {() => (
@@ -131,12 +133,20 @@ export default function DashboardInner(): JSX.Element {
                                             />
                                         </Form.Controls>
                                     </Form>
-                                    <Button type='default' className='uk-margin-small-top' onClick={() => {
-                                        deployShop(value, valueDescription)
-                                        onModalAddCompany()
-                                    }}>
+
+                                    <Button
+                                        type='default'
+                                        className='uk-margin-small-top'
+                                        onClick={() => {
+                                            deployShop(value, valueDescription)
+                                            onModalAddCompany()
+                                        }}
+                                        disabled={value && valueDescription ? false : true}
+                                    >
                                         Add company
                                     </Button>
+
+
                                 </Flex>
                             </Modal>
                             <div className={classNames('info-company', modalWithdraw && 'info-company--open')}>
@@ -159,20 +169,26 @@ export default function DashboardInner(): JSX.Element {
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="uk-height-small">
+                                                {//@ts-ignore
+                                                    modalShopID && vePay.shops && vePay.shops[modalShopID].transactions ?
+                                                        <tbody className="uk-height-small">
+                                                            {//@ts-ignore
+                                                                modalShopID && vePay.shops![modalShopID]?.transactions?.map((item: { orderId: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; amount: BigNumber.Value }) => (
+                                                                    <tr>
+                                                                        <td className="uk-text-left uk-width-medium">
+                                                                            {item.orderId}
+                                                                        </td>
+                                                                        <td className="uk-text-left uk-width-medium">
+                                                                            {new BigNumber(item.amount).shiftedBy(-USDT_DECIMALS).toFixed()}
+                                                                        </td>
+                                                                    </tr>
+                                                                ))}
+                                                        </tbody>
+                                                        :
+                                                        <>
+                                                            <Text className='uk-margin-small uk-padding-small'>Don`t have transactions</Text>
+                                                        </>}
 
-                                                    {//@ts-ignore
-                                                        modalShopID && vePay.shops![modalShopID]?.transactions?.map((item: { orderId: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; amount: BigNumber.Value }) => (
-                                                            <tr>
-                                                                <td className="uk-text-left uk-width-medium">
-                                                                    {item.orderId}
-                                                                </td>
-                                                                <td className="uk-text-left uk-width-medium">
-                                                                    {new BigNumber(item.amount).shiftedBy(-USDT_DECIMALS).toFixed()}
-                                                                </td>
-                                                            </tr>
-                                                        ))}
-                                                </tbody>
                                             </table>
                                         </Tile>
                                     </Card>
@@ -180,6 +196,12 @@ export default function DashboardInner(): JSX.Element {
                                         <Text component='h4'>Withdraw</Text>
                                     </Card>
                                     <Tile type='primary' className='uk-padding-small'>
+                                        {/* {//@ts-ignore
+                                            modalShopID && vePay.shops[modalShopID]._usdtBalance === 0 ?
+                                                <>
+                                                    <Text className='uk-margin-small uk-padding-small'>Don`t have money</Text>
+                                                </>
+                                                : */}
                                         <Form>
                                             <Form.Controls className='uk-margin-small-bottom'>
                                                 <Input
@@ -203,6 +225,8 @@ export default function DashboardInner(): JSX.Element {
                                                 Withdraw
                                             </Button>
                                         </Form>
+                                        {/* } */}
+
                                     </Tile>
                                 </div>
                             </div>
