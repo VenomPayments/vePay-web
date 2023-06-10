@@ -39,7 +39,7 @@ export default function DashboardInner(): JSX.Element {
 
     // --- Withdraw
     const [modalWithdraw, setModalWithdraw] = React.useState(false)
-    const [modalShopID, setModalShopID] = React.useState<number | null>(0)
+    const [modalShopID, setModalShopID] = React.useState<number>(0)
     const onModalWithdraw = (i: number) => {
         setModalShopID(i)
         setModalWithdraw(!modalWithdraw)
@@ -211,7 +211,7 @@ export default function DashboardInner(): JSX.Element {
                                                         send_gas_to: wallet.account?.address!,
                                                     },
                                                     //@ts-ignore
-                                                    modalShopID && vePay.shops![modalShopID].address
+                                                    vePay?.shops && vePay.shops![modalShopID].address
                                                 )
                                             }}>
                                                 Withdraw

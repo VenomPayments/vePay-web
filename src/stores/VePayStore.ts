@@ -79,7 +79,6 @@ export class VePayStore extends AbstractStore<
                     result.event === 'ShopDeployed'
                     && result.data.shop_owner.toString() === this.wallet.account?.address.toString()
                 ) {
-                    console.log(result)
                     const data = await VePayStore.Utils._getDetails(result.data.shop)
                     shops.push({
                         //@ts-ignore
