@@ -15,4 +15,4 @@ jobs:
     - name: Stop container
       run: docker stop vePay-web && docker rm vePay-web || true
     - name: Start container
-      run: docker run -p 127.0.0.1:30100:3000 --name vePay-web -d vePay-web:latest
+      run: docker run -p 127.0.0.1:30100:80 --name vePay-web -d vePay-web:latest
