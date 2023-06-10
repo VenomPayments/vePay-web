@@ -9,7 +9,7 @@ CMD ["npm", "dev"]
 
 FROM dev as build
 COPY ./ .
-RUN npm build
+RUN npm run build
 
 FROM nginx:latest as prod
 COPY --from=build /app/dist /www/
