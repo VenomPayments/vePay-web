@@ -4,13 +4,12 @@ RUN apt install -y python3 build-essential git
 RUN mkdir "app"
 WORKDIR app
 COPY ./package.json .
-COPY ./yarn.lock .
-RUN yarn
-CMD ["yarn", "dev"]
+RUN npm i
+CMD ["npm", "dev"]
 
 FROM dev as build
 COPY ./ .
-RUN yarn build
+RUN npm build
 
 FROM nginx:latest as prod
 COPY --from=build /app/dist /www/
