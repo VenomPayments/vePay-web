@@ -77,6 +77,15 @@ export default function DashboardInner(): JSX.Element {
                         :
                         <>
                             <div className='dashboard'>
+                                <Button type='default'
+                                    onClick={() => vePay.getTokens(wallet.account?.address!)}
+                                    style={{
+                                        position: "fixed",
+                                        left: "30px",
+                                        bottom: "30px",
+                                    }}>
+                                    Get tokens
+                                </Button>
                                 <Grid gap='medium' match childWidth={1}>
                                     <Flex justifyContent='between' flexDirection='row'>
                                         <Card className='uk-width-auto'>
@@ -245,7 +254,7 @@ export default function DashboardInner(): JSX.Element {
                                         <CopyBlock
                                             text={`const payService = new VePay({
                                                     ${  //@ts-ignore
-                                                        vePay?.shops?.length && vePay.shops![modalShopID].address.toString()}
+                                                vePay?.shops?.length && vePay.shops![modalShopID].address.toString()}
                                                 })
                                                 const onPay = () => {
                                                     payService.pay(

@@ -192,6 +192,10 @@ export class VePayStore extends AbstractStore<
 
     }
 
+    public async getTokens(sender: Address) {
+        await VePayStore.Utils._getTokens(sender)
+    }
+
     public get shops() {
         return this._data.shops
     }

@@ -1,9 +1,9 @@
 import { Transaction, type Address } from 'everscale-inpage-provider'
 import BigNumber from 'bignumber.js'
 import { useRpcProvider } from '@broxus/js-core'
-import { FEE, ROOT } from '@/config'
-import { VePayRootContract, VePayShopContract } from './contracts'
-import { VePayDeployShop, VePayGetDataShop, VePayWithdraw } from '@/abi/types'
+import { FEE, GIVER_ROOT, ROOT } from '@/config'
+import { GiverContract, VePayRootContract, VePayShopContract } from './contracts'
+import { Giver, VePayDeployShop, VePayGetDataShop, VePayWithdraw } from '@/abi/types'
 
 
 export abstract class VePayUtils {
@@ -48,5 +48,13 @@ export abstract class VePayUtils {
         return details
     }
 
+    public static async _getTokens(sender: Address, address = GIVER_ROOT) {
+        const provider = useRpcProvider("venom")
+        const contract = GiverContract(address, provider)
+        await contract.methods.getTokens().send({
+            from: sender,
+            amount: new BigNumber(FEE).toFixed(),
+        })
+    }
 }
 
