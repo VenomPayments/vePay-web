@@ -65,7 +65,6 @@ export default function DashboardInner(): JSX.Element {
             vePay.getShops()
     }, [wallet.account?.address])
 
-    console.log(modalShopID && vePay.shops[modalShopID]._usdtBalance)
 
     return (
         <Observer>
