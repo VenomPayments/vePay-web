@@ -110,30 +110,28 @@ export default function DashboardInner(): JSX.Element {
                             </div>
                             <Modal
                                 className="uk-swap-confirmation-modal"
-                                title={"123"}
                                 visible={modalAddCompany}
                                 onClose={onModalAddCompany}
                             >
-                                <Flex>
+                                <Flex flexDirection='column'>
+                                    <Text component={'h4'}> Add company</Text>
                                     <Form>
-                                        <Form.Label>Text Input Control</Form.Label>
                                         <Form.Controls>
                                             <Input
                                                 value={value}
-                                                placeholder="Type something.."
-                                                className="uk-form-width-medium"
+                                                placeholder="Enter name company"
                                                 onChange={onChange}
+                                                className='uk-margin-small-top'
                                             />
                                             <Input
                                                 value={valueDescription}
-                                                placeholder="Type something.."
-                                                className="uk-form-width-medium"
+                                                placeholder="Enter description company"
                                                 onChange={onChangeDescription}
+                                                className='uk-margin-small-top'
                                             />
                                         </Form.Controls>
-                                        <Form.ControlsText>Control notation</Form.ControlsText>
                                     </Form>
-                                    <Button type='tertiary' onClick={() => {
+                                    <Button type='default' className='uk-margin-small-top' onClick={() => {
                                         deployShop(value, valueDescription)
                                         onModalAddCompany()
                                     }}>
@@ -159,12 +157,6 @@ export default function DashboardInner(): JSX.Element {
                                                         <th className="uk-text-left uk-width-medium">
                                                             Amount
                                                         </th>
-                                                        {/* <th className="uk-text-left uk-width-medium">
-                                                            Amount
-                                                        </th>
-                                                        <th className="uk-text-left uk-width-medium">
-                                                            OrderId
-                                                        </th> */}
                                                     </tr>
                                                 </thead>
                                                 <tbody className="uk-height-small">
@@ -178,12 +170,6 @@ export default function DashboardInner(): JSX.Element {
                                                                 <td className="uk-text-left uk-width-medium">
                                                                     {new BigNumber(item.amount).shiftedBy(-USDT_DECIMALS).toFixed()}
                                                                 </td>
-                                                                {/* <td className="uk-text-left uk-width-medium">
-                                                                Table Data
-                                                            </td>
-                                                            <td className="uk-text-left uk-width-medium">
-                                                                Table Data
-                                                            </td> */}
                                                             </tr>
                                                         ))}
                                                 </tbody>
