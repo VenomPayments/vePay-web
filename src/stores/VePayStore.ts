@@ -51,8 +51,7 @@ export class VePayStore extends AbstractStore<
                     result.event === 'ShopDeployed'
                     && result.data.call_id === meta.call_id
                 ) {
-                    alert("add good")
-                    console.log(result)
+                    await this.getShops()
                     return;
                 }
                 alert("error")
@@ -78,8 +77,9 @@ export class VePayStore extends AbstractStore<
             .filterMap(async result => {
                 if (
                     result.event === 'ShopDeployed'
-                    && result.data.shop_owner.toString === this.wallet.account?.address.toString
+                    && result.data.shop_owner.toString() === this.wallet.account?.address.toString()
                 ) {
+                    console.log(result)
                     const data = await VePayStore.Utils._getDetails(result.data.shop)
                     shops.push({
                         //@ts-ignore

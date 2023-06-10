@@ -39,7 +39,7 @@ export default function DashboardInner(): JSX.Element {
 
     // --- Withdraw
     const [modalWithdraw, setModalWithdraw] = React.useState(false)
-    const [modalShopID, setModalShopID] = React.useState<number | null>(null)
+    const [modalShopID, setModalShopID] = React.useState<number | null>(0)
     const onModalWithdraw = (i: number) => {
         setModalShopID(i)
         setModalWithdraw(!modalWithdraw)
@@ -144,8 +144,8 @@ export default function DashboardInner(): JSX.Element {
                             <div className={classNames('info-company', modalWithdraw && 'info-company--open')}>
                                 <div className='info-company--container'>
                                     <Card className='uk-width-auto uk-margin-medium-bottom'>
-                                        <Text component='h3'>{modalShopID && vePay.shops![modalShopID]._name}</Text>
-                                        <Text component='h5'>{modalShopID && vePay.shops![modalShopID]._description}</Text>
+                                        <Text component='h3'>{vePay?.shops && vePay.shops[modalShopID]._name}</Text>
+                                        <Text component='h5'>{vePay?.shops && vePay.shops[modalShopID]._description}</Text>
                                     </Card>
                                     <Card className='uk-width-auto uk-margin-medium-bottom'>
                                         <Text component='h4' className='uk-margin-small-bottom'>Transactions</Text>
