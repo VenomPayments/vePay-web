@@ -4,9 +4,10 @@ import { useProvider, useStore } from '@/hooks/useStore'
 import '../page/DashboardPage.scss'
 
 import { useTvmWallet } from '@/utils'
+import { CopyBlock, dracula } from "react-code-blocks";
 
 import {
-    Button, Card, Flex, Form, Grid, Input, Modal, Text, Tile, Width,
+    Button, Card, Flex, Form, Grid, Icon, Input, Modal, Text, Tile, Width,
 } from '@broxus/react-uikit'
 import { Observer, observer } from 'mobx-react-lite'
 import { useIntl } from 'react-intl'
@@ -149,6 +150,14 @@ export default function DashboardInner(): JSX.Element {
                             </Modal>
                             <div className={classNames('info-company', modalWithdraw && 'info-company--open')}>
                                 <div className='info-company--container'>
+                                    <Icon icon='close' style={{
+                                        right: "25px",
+                                        position: "absolute",
+                                        zIndex: "99999",
+                                        top: "25px",
+                                        cursor: "pointer",
+                                    }}
+                                        onClick={() => setModalWithdraw(!modalWithdraw)} />
                                     <Card className='uk-width-auto uk-margin-medium-bottom'>
                                         <Text component='h3'>{vePay?.shops?.length && vePay.shops[modalShopID]._name}</Text>
                                         <Text component='h5'>{vePay?.shops?.length && vePay.shops[modalShopID]._description}</Text>
@@ -233,28 +242,26 @@ export default function DashboardInner(): JSX.Element {
                                         <Text component='h4'>Your code</Text>
                                     </Card>
                                     <Tile type='primary' className='uk-padding-small'>
-                                        <Text>
-                                            {`
-                                                const payService = new VePay({
+                                        <CopyBlock
+                                            text={`const payService = new VePay({
                                                     ${vePay?.shops?.length && vePay.shops[modalShopID]._root.toString()}
                                                 })
-                                            `}
-                                        </Text>
-                                        <Text>
-                                            {`
                                                 const onPay = () => {
-                                                  payService.pay(
-                                                      orderId: // Your orderId,
-                                                       amount: // Your amount,
+                                                    payService.pay(
+                                                        orderId: // Your orderId,
+                                                         amount: // Your amount,
+                                                    }
                                                   }
-                                                }
-                                            `}
-                                        </Text>
-                                        <Text>
-                                            {`
-                                                <button onClick={onPay} > Pay bill </button>
-                                            `}
-                                        </Text>
+                                                <button onClick={onPay} > Pay bill </button>`}
+                                            language="jsx"
+                                            codeBlock={true}
+                                            theme={dracula}
+                                            showLineNumbers={false}
+                                            wrapLines={true}
+                                        />
+
+                                        <br />
+                                        <a src={"https://www.npmjs.com/package/vepay"}>Our npm lib</a>
                                     </Tile>
                                 </div>
                             </div>
