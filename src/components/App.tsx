@@ -17,6 +17,7 @@ import { ScrollManager } from './layout/ScrollManager'
 import { Header } from './layout/Header'
 import { Footer } from './layout/Footer'
 import { VePayStore } from '@/stores/VePayStore'
+import toast, { Toaster } from 'react-hot-toast';
 
 export function App(): JSX.Element {
     const localization = React.useContext(LocalizationContext)
@@ -46,6 +47,7 @@ export function App(): JSX.Element {
                                         </UpexStoreProvider>
                                     </Route>
                                 </Switch>
+                                <Toaster position="bottom-left" />
                             </main>
                             <Footer key="footer" />
                         </div>

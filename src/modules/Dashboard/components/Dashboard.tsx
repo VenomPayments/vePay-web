@@ -65,7 +65,6 @@ export default function DashboardInner(): JSX.Element {
             vePay.getShops()
     }, [wallet.account?.address])
 
-
     return (
         <Observer>
             {() => (
@@ -154,43 +153,46 @@ export default function DashboardInner(): JSX.Element {
                                         <Text component='h3'>{vePay?.shops?.length && vePay.shops[modalShopID]._name}</Text>
                                         <Text component='h5'>{vePay?.shops?.length && vePay.shops[modalShopID]._description}</Text>
                                     </Card>
-                                    <Card className='uk-width-auto uk-margin-medium-bottom'>
-                                        <Text component='h4' className='uk-margin-small-bottom'>Transactions</Text>
-                                        <Tile type='primary' className='uk-padding-remove'>
-                                            <table className="uk-table uk-table-divider uk-width-1-1 table uk-padding-remove">
-                                                <thead className="uk-height-1-1">
-                                                    <tr>
-                                                        <th className="uk-text-left uk-width-medium">
-                                                            Order ID
-                                                        </th>
-                                                        <th className="uk-text-left uk-width-medium">
-                                                            Amount
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                {//@ts-ignore
-                                                    modalShopID && vePay.shops && vePay.shops[modalShopID].transactions ?
-                                                        <tbody className="uk-height-small">
-                                                            {//@ts-ignore
-                                                                modalShopID && vePay.shops![modalShopID]?.transactions?.map((item: { orderId: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; amount: BigNumber.Value }) => (
-                                                                    <tr>
-                                                                        <td className="uk-text-left uk-width-medium">
-                                                                            {item.orderId}
-                                                                        </td>
-                                                                        <td className="uk-text-left uk-width-medium">
-                                                                            {new BigNumber(item.amount).shiftedBy(-USDT_DECIMALS).toFixed()}
-                                                                        </td>
-                                                                    </tr>
-                                                                ))}
-                                                        </tbody>
-                                                        :
-                                                        <>
-                                                            <Text className='uk-margin-small uk-padding-small'>Don`t have transactions</Text>
-                                                        </>}
-
-                                            </table>
-                                        </Tile>
-                                    </Card>
+                                    <Observer>
+                                        {() => (
+                                            <Card className='uk-width-auto uk-margin-medium-bottom'>
+                                                <Text component='h4' className='uk-margin-small-bottom'>Transactions</Text>
+                                                <Tile type='primary' className='uk-padding-remove'>
+                                                    <table className="uk-table uk-table-divider uk-width-1-1 table uk-padding-remove">
+                                                        <thead className="uk-height-1-1">
+                                                            <tr>
+                                                                <th className="uk-text-left uk-width-medium">
+                                                                    Order ID
+                                                                </th>
+                                                                <th className="uk-text-left uk-width-medium">
+                                                                    Amount
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        {//@ts-ignore
+                                                            vePay?.shops?.length && vePay.shops[modalShopID].transactions.length ?
+                                                                <tbody className="uk-height-small">
+                                                                    {//@ts-ignore
+                                                                        vePay?.shops?.length && vePay.shops![modalShopID]?.transactions?.map((item: { orderId: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; amount: BigNumber.Value }) => (
+                                                                            <tr>
+                                                                                <td className="uk-text-left uk-width-medium">
+                                                                                    {item.orderId}
+                                                                                </td>
+                                                                                <td className="uk-text-left uk-width-medium">
+                                                                                    {new BigNumber(item.amount).shiftedBy(-USDT_DECIMALS).toFixed()}
+                                                                                </td>
+                                                                            </tr>
+                                                                        ))}
+                                                                </tbody>
+                                                                :
+                                                                <>
+                                                                    <Text className='uk-margin-small uk-padding-small'>Don`t have transactions</Text>
+                                                                </>}
+                                                    </table>
+                                                </Tile>
+                                            </Card>
+                                        )}
+                                    </Observer>
                                     <Card className='uk-width-auto uk-margin-small-bottom'>
                                         <Text component='h4'>Withdraw</Text>
                                     </Card>
@@ -226,6 +228,33 @@ export default function DashboardInner(): JSX.Element {
                                         </Form>
                                         {/* } */}
 
+                                    </Tile>
+                                    <Card className='uk-width-auto uk-margin-small-bottom'>
+                                        <Text component='h4'>Your code</Text>
+                                    </Card>
+                                    <Tile type='primary' className='uk-padding-small'>
+                                        <Text>
+                                            {`
+                                                const payService = new VePay({
+                                                    ${vePay?.shops?.length && vePay.shops[modalShopID]._root.toString()}
+                                                })
+                                            `}
+                                        </Text>
+                                        <Text>
+                                            {`
+                                                const onPay = () => {
+                                                  payService.pay(
+                                                      orderId: // Your orderId,
+                                                       amount: // Your amount,
+                                                  }
+                                                }
+                                            `}
+                                        </Text>
+                                        <Text>
+                                            {`
+                                                <button onClick={onPay} > Pay bill </button>
+                                            `}
+                                        </Text>
                                     </Tile>
                                 </div>
                             </div>

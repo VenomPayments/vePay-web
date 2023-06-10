@@ -7,6 +7,7 @@ import { VePayRootContract, VePayShopContract } from "./contracts";
 import { ROOT, USDT_DECIMALS } from "@/config";
 import { VePayGetDataShop } from "@/abi/types";
 import BigNumber from "bignumber.js";
+import { toast } from "react-hot-toast";
 
 type VePayStoreState = {
 }
@@ -37,7 +38,14 @@ export class VePayStore extends AbstractStore<
         call_id: string
         send_gas_to: Address
     }) {
-        const provider = useRpcClient('venom')
+        const toastId = toast.loading('Wait for the adding a companies...', {
+            style: {
+                borderRadius: '10px',
+                background: '#00AEE8',
+                color: '#fff',
+            },
+        });
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = VePayRootContract(ROOT)
         const successStream = await subscriber
@@ -52,9 +60,16 @@ export class VePayStore extends AbstractStore<
                     && result.data.call_id === meta.call_id
                 ) {
                     await this.getShops()
+                    toast.success('Company successfully established', {
+                        id: toastId,
+                        style: {
+                            borderRadius: '10px',
+                            background: '#00AEE8',
+                            color: '#fff',
+                        },
+                    });
                     return;
                 }
-                alert("error")
                 return undefined
             })
             .delayed(s => s.first())
@@ -66,7 +81,7 @@ export class VePayStore extends AbstractStore<
     }
 
     public async getShops() {
-        const provider = useRpcClient('venom')
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = VePayRootContract(ROOT)
         const shops: Array<VePayGetDataShop> = [];
@@ -77,7 +92,7 @@ export class VePayStore extends AbstractStore<
                 transaction,
             }))
             .filterMap(async result => {
-                if(result.event === 'ShopDeployed'){
+                if (result.event === 'ShopDeployed') {
                     console.log(result)
                 }
                 if (
@@ -85,6 +100,7 @@ export class VePayStore extends AbstractStore<
                     && result.data.shop_owner.toString() === this.wallet.account?.address.toString()
                 ) {
                     const data = await VePayStore.Utils._getDetails(result.data.shop)
+                    console.log(await this.getShopTransaction(result.data.shop))
                     shops.push({
                         //@ts-ignore
                         address: result.data.shop,
@@ -104,7 +120,7 @@ export class VePayStore extends AbstractStore<
     }
 
     public async getShopTransaction(shopAddress: Address) {
-        const provider = useRpcClient('venom')
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = VePayShopContract(shopAddress)
         const transactions: ({ call_id: string; } & { sender: Address; } & { amount: string; } & { orderId: string; })[] = []
@@ -135,8 +151,14 @@ export class VePayStore extends AbstractStore<
         call_id: string
         send_gas_to: Address
     }, shopAddress: Address) {
-        console.log(shopAddress)
-        const provider = useRpcClient('venom')
+        const toastId = toast.loading('Wait for the withdrawal...', {
+            style: {
+                borderRadius: '10px',
+                background: '#00AEE8',
+                color: '#fff',
+            },
+        });
+        const provider = useRpcProvider('venom')
         const subscriber = new provider.Subscriber()
         const contract = VePayShopContract(shopAddress)
         const successStream = await subscriber
@@ -150,12 +172,16 @@ export class VePayStore extends AbstractStore<
                     result.event === 'Withdraw'
                     && result.data.call_id === meta.call_id
                 ) {
-                    alert("add Withdraw")
-                    console.log(result)
+                    toast.success('The withdrawal was successful', {
+                        id: toastId,
+                        style: {
+                            borderRadius: '10px',
+                            background: '#00AEE8',
+                            color: '#fff',
+                        },
+                    });
                     return;
                 }
-                console.log("result", result)
-                alert("error")
                 return undefined
             })
             .delayed(s => s.first())

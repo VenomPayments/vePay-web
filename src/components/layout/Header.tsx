@@ -8,6 +8,7 @@ import {
 } from '@broxus/react-uikit'
 import { ConnectButton, TvmConnector, useTvmWalletContext } from '@broxus/react-modules'
 import { Icon } from '@broxus/react-components'
+import logo from '../../assets/icons/logo.png'
 
 
 import { appRoutes } from '@/routes'
@@ -28,7 +29,11 @@ export function HeaderInner(): JSX.Element {
                             <>
                                 <Navbar.Left className="uk-width-expand header--logo">
                                     <Link to={appRoutes.home.makeUrl()} className="logo">
-                                        VePay
+                                        <img style={{
+                                            background: " #fff",
+                                            padding: " 5px 10px",
+                                            borderRadius: "9px",
+                                        }} src={logo} />
                                     </Link>
                                 </Navbar.Left>
 

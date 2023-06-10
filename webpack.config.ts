@@ -106,7 +106,8 @@ export default (_: any, options: any): WebpackConfig => {
 
     config.plugins.push(
         new HtmlWebpackPlugin({
-            title: 'VePay',
+            title: 'vePay',
+            favicon: 'public/favicon.ico',
             filename: path.resolve(__dirname, 'dist/index.html'),
             template: 'public/index.html',
             inject: false,
@@ -127,12 +128,12 @@ export default (_: any, options: any): WebpackConfig => {
                     },
                     {
                         context: 'public',
-                        from: 'favicon.svg',
+                        from: 'favicon.ico',
                     },
                     {
                         context: 'public',
-                        from: 'meta-image.png',
-                        to: 'assets/meta-image.png'
+                        from: 'meta-image.ico',
+                        to: 'meta-image.ico'
                     },
                 ],
             }),
