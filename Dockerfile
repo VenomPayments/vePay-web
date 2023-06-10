@@ -1,4 +1,4 @@
-FROM node:18-slim as dev
+FROM node:16-slim as dev
 RUN apt update
 RUN apt install -y python3 build-essential git
 RUN mkdir "app"
